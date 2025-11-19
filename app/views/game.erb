@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="game-container">
+    <div class="header">
+      <h1>Tic Tac Toe</h1>
+      <div class="score-board">
+        <div class="score-item">
+          <span class="score-label">X</span>
+          <span class="score-value" id="x-score"><%= @scores['X'] || 0 %></span>
+        </div>
+        <div class="score-divider">|</div>
+        <div class="score-item">
+          <span class="score-label">O</span>
+          <span class="score-value" id="o-score"><%= @scores['O'] || 0 %></span>
+        </div>
+      </div>
+      <div class="status" id="status">
+        <% if @winner %>
+          <% if @winner == 'draw' %>
+            It's a Draw!
+          <% else %>
+            Player <span class="player-<%= @winner.downcase %>"><%= @winner %></span> Wins!
+          <% end %>
+        <% else %>
+          Current Player: <span class="player-<%= @current_player.downcase %>"><%= @current_player %></span>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="board" id="board">
+      <% (0..8).each do |i| %>
+        <% value = @board[i] %>
+        <a href="/move/<%= i %>" class="cell<% if value %> taken <%= value.downcase %><% end %>">
+          <%= value %>
+        </a>
+      <% end %>
+    </div>
+
+    <div class="controls">
+      <button class="btn btn-primary" id="reset-btn">New Game</button>
+      <a href="/" class="btn btn-secondary">Back to Home</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Add click handlers to reset button
+  document.getElementById('reset-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    fetch('/api/reset', { method: 'POST' })
+      .then(() => window.location.reload());
+  });
+
+  // Highlight winning cells if there's a winner
+  <% if @winner && @winner != 'draw' %>
+    const board = <%= @board.inspect %>;
+    const winner = '<%= @winner %>';
+    const winningCombos = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
+    ];
+
+    winningCombos.forEach(combo => {
+      if (board[combo[0]] && board[combo[0]] === winner && 
+          board[combo[1]] === winner && board[combo[2]] === winner) {
+        document.querySelectorAll('.cell').forEach((cell, idx) => {
+          if (combo.includes(idx)) {
+            cell.classList.add('winner-cell');
+          }
+        });
+      }
+    });
+  <% end %>
+</script>
