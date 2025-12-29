@@ -4,8 +4,61 @@
     <p class="subtitle">Built with Ruby</p>
     <div class="mode-selection">
       <h2>Select Game Mode</h2>
-      <a href="/game?mode=2player" class="start-button">2 Players</a>
-      <a href="/game?mode=bot" class="start-button bot-mode">Play vs Bot</a>
+      <div style="display: flex; flex-direction: column; gap: 15px; max-width: 300px; margin: 0 auto;">
+        <a href="/game?mode=2player" class="start-button" style="background: linear-gradient(135deg, #e94560 0%, #00adb5 100%);">
+          2 Players
+        </a>
+      </div>
+      
+      <div class="bot-mode-section" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+        <h3>Play vs Bot</h3>
+        
+        <!-- Simple difficulty selection -->
+        <div class="difficulty-buttons" style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px;">
+          <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+            <h4 style="color: #4CAF50; margin-bottom: 10px;">Easy Mode</h4>
+            <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 10px;">Bot makes random moves</p>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+              <a href="/game?mode=bot&difficulty=easy&player_symbol=X" class="start-button" style="background: #4CAF50; padding: 10px 20px; font-size: 0.9rem;">
+                Play as X
+              </a>
+              <a href="/game?mode=bot&difficulty=easy&player_symbol=O" class="start-button" style="background: #4CAF50; padding: 10px 20px; font-size: 0.9rem;">
+                Play as O
+              </a>
+            </div>
+          </div>
+          
+          <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+            <h4 style="color: #FF9800; margin-bottom: 10px;">Normal Mode</h4>
+            <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 10px;">Smart bot - blocks wins, takes center</p>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+              <a href="/game?mode=bot&difficulty=normal&player_symbol=X" class="start-button" style="background: #FF9800; padding: 10px 20px; font-size: 0.9rem;">
+                Play as X
+              </a>
+              <a href="/game?mode=bot&difficulty=normal&player_symbol=O" class="start-button" style="background: #FF9800; padding: 10px 20px; font-size: 0.9rem;">
+                Play as O
+              </a>
+            </div>
+          </div>
+          
+          <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+            <h4 style="color: #F44336; margin-bottom: 10px;">Hard Mode</h4>
+            <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 10px;">Unbeatable bot - uses minimax algorithm</p>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+              <a href="/game?mode=bot&difficulty=hard&player_symbol=X" class="start-button" style="background: #F44336; padding: 10px 20px; font-size: 0.9rem;">
+                Play as X
+              </a>
+              <a href="/game?mode=bot&difficulty=hard&player_symbol=O" class="start-button" style="background: #F44336; padding: 10px 20px; font-size: 0.9rem;">
+                Play as O
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <p style="margin-top: 20px; font-size: 0.8rem; color: #888; text-align: center;">
+          <strong>Note:</strong> X always goes first. If you choose O, the bot will make the first move automatically.
+        </p>
+      </div>
     </div>
   </div>
 </div>
