@@ -18,10 +18,26 @@
           <% if @winner == 'draw' %>
             It's a Draw!
           <% else %>
-            Player <span class="player-<%= @winner.downcase %>"><%= @winner %></span> Wins!
+            <% if @game_mode == 'bot' %>
+              <% if @winner == 'X' %>
+                You Win!
+              <% else %>
+                Bot Wins!
+              <% end %>
+            <% else %>
+              Player <span class="player-<%= @winner.downcase %>"><%= @winner %></span> Wins!
+            <% end %>
           <% end %>
         <% else %>
-          Current Player: <span class="player-<%= @current_player.downcase %>"><%= @current_player %></span>
+          <% if @game_mode == 'bot' %>
+            <% if @current_player == 'X' %>
+              Your turn (X)
+            <% else %>
+              Bot is thinking...
+            <% end %>
+          <% else %>
+            Current Player: <span class="player-<%= @current_player.downcase %>"><%= @current_player %></span>
+          <% end %>
         <% end %>
       </div>
     </div>
