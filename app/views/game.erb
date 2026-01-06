@@ -2,14 +2,45 @@
   <div class="game-container">
     <div class="header">
       <h1>Tic Tac Toe</h1>
+      
+      <!-- Difficulty Indicator (for bot mode) -->
+      <% if @game_mode == 'bot' && @difficulty && @player_symbol %>
+        <div class="difficulty-indicator" style="margin: 10px 0; padding: 8px 15px; background: rgba(255,255,255,0.1); border-radius: 20px; display: inline-block;">
+          Difficulty: 
+          <span style="font-weight: bold; 
+            <% if @difficulty == 'easy' %>color: #4CAF50;<% end %>
+            <% if @difficulty == 'normal' %>color: #FF9800;<% end %>
+            <% if @difficulty == 'hard' %>color: #F44336;<% end %>">
+            <%= @difficulty.capitalize %>
+          </span>
+          | You are: <span class="player-<%= @player_symbol.downcase if @player_symbol %>"><%= @player_symbol %></span>
+        </div>
+      <% end %>
+      
       <div class="score-board">
         <div class="score-item">
-          <span class="score-label">X</span>
+          <span class="score-label">
+            <% if @game_mode == 'bot' && @player_symbol == 'X' %>
+              You (X)
+            <% elsif @game_mode == 'bot' && @bot_symbol == 'X' %>
+              Bot (X)
+            <% else %>
+              X
+            <% end %>
+          </span>
           <span class="score-value" id="x-score"><%= @scores['X'] || 0 %></span>
         </div>
         <div class="score-divider">|</div>
         <div class="score-item">
-          <span class="score-label">O</span>
+          <span class="score-label">
+            <% if @game_mode == 'bot' && @player_symbol == 'O' %>
+              You (O)
+            <% elsif @game_mode == 'bot' && @bot_symbol == 'O' %>
+              Bot (O)
+            <% else %>
+              O
+            <% end %>
+          </span>
           <span class="score-value" id="o-score"><%= @scores['O'] || 0 %></span>
         </div>
       </div>
@@ -19,24 +50,24 @@
             It's a Draw!
           <% else %>
             <% if @game_mode == 'bot' %>
-              <% if @winner == 'X' %>
-                You Win!
+              <% if @winner == @player_symbol %>
+                <span class="player-<%= @player_symbol.downcase if @player_symbol %>">You Win!</span>
               <% else %>
-                Bot Wins!
+                <span class="player-<%= @bot_symbol.downcase if @bot_symbol %>">Bot Wins!</span>
               <% end %>
             <% else %>
-              Player <span class="player-<%= @winner.downcase %>"><%= @winner %></span> Wins!
+              Player <span class="player-<%= @winner.downcase if @winner %>"><%= @winner %></span> Wins!
             <% end %>
           <% end %>
         <% else %>
-          <% if @game_mode == 'bot' %>
-            <% if @current_player == 'X' %>
-              Your turn (X)
+          <% if @game_mode == 'bot' && @player_symbol && @bot_symbol %>
+            <% if @current_player == @player_symbol %>
+              Your turn (<span class="player-<%= @player_symbol.downcase %>"><%= @player_symbol %></span>)
             <% else %>
-              Bot is thinking...
+              Bot's turn (<span class="player-<%= @bot_symbol.downcase %>"><%= @bot_symbol %></span>)
             <% end %>
           <% else %>
-            Current Player: <span class="player-<%= @current_player.downcase %>"><%= @current_player %></span>
+            Current Player: <span class="player-<%= @current_player.downcase if @current_player %>"><%= @current_player %></span>
           <% end %>
         <% end %>
       </div>
